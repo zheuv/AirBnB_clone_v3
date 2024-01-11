@@ -29,8 +29,7 @@ class FileStorage:
                         obj_class = eval(class_name)
                         obj_instance = obj_class(**data)
                         FileStorage.__objects[key] = obj_instance
-            except Exception:
-                pass
+            
 
 
 
