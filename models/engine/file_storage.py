@@ -24,7 +24,7 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as file:
                 serialized_objects = json.load(file)
                 for key, obj in serialized_objects.items():
-                    class_name, obj_id = key.split()
+                    class_name, obj_id = key.split('.')
                     obj_class = eval(class_name)
                     obj_instance = obj_class(**data)
                     FileStorage.__objects[key] = obj_instance
