@@ -47,6 +47,16 @@ class HBNBCommand(cmd.Cmd):
         else:
             del storage.all()[checked]
             storage.save()
+    def do_all(self, arg):
+        if arg == "BaseModel":
+            string_repr_of_a_class = []
+            for key in storage.all().keys():
+                k , v = key.split('.')
+                if k == arg:
+                    string_repr_of_a_class.append(str(storage.all()[key]))
+            print(string_repr_of_a_class)
+        else:
+            print("** class doesn't exist **")
     def do_quit(self, arg):
         """Quit the command interpreter."""
         return True
