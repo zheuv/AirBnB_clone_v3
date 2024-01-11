@@ -3,6 +3,7 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
+import re
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for HBNB project."""
     prompt = "(hbnb) "
@@ -28,12 +29,25 @@ class HBNBCommand(cmd.Cmd):
             elif length == 1:
                 return 3
             else:
-                arg = '.'.join(args) 
+                arg = []
+                arg.append(args[0])
+                arg.append(args[1])
+                arg = '.'.join(arg) 
                 data = storage.all()
                 for key in data.keys():
                     if key == arg:
                         return arg
                 return 4
+    def cast(self, arg):
+        """cast string to float or int if possible"""
+        try:
+            if "." in arg:
+                arg = float(arg)
+            else:
+                arg = int(arg)
+        except ValueError:
+            pass
+        return arg
     def do_show(self, arg):
         checked = self.check(arg)
         if type(checked) is int:
@@ -57,6 +71,25 @@ class HBNBCommand(cmd.Cmd):
             print(string_repr_of_a_class)
         else:
             print("** class doesn't exist **")
+    def do_update(self, arg):
+        checked = self.check(arg)
+        if type(checked) is int:
+            print(self.dict_of_failure_output[checked])
+        else:
+            args = arg.split()
+            if len(args) == 2:
+                print("** attribute name missing **")
+            elif len(args) == 3:
+                print("** value missing **")
+            else :
+                if args[3].startswith('"'):
+                    value = re.search(r'"([^"]+)"', arg).group(1)
+                elif args[3].startswith("'"):
+                    value = re.search(r'\'([^\']+)\'', arg).group(1)
+                else:
+                    value = arg[3]
+                setattr(storage.all()[checked], args[2], self.cast(value))
+                storage.save()
     def do_quit(self, arg):
         """Quit the command interpreter."""
         return True
