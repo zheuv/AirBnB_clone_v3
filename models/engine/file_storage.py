@@ -11,7 +11,7 @@ class FileStorage:
     def all(self):
         return FileStorage.__objects
     def new(self, obj):
-        key = "{}.{}".format(obj.__class__.name, obj.id)
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
     def save(self):
         serialized_objects = dict()
@@ -22,7 +22,7 @@ class FileStorage:
     def reload(self):
         if os.path.exists(FileStorage.__file_path):
             try :
-                with open(FileStorage.__file_path, 'r') as file):
+                with open(FileStorage.__file_path, 'r') as file:
                     serialized_objects = json.load(file)
                     for key, obj in serialized_objects.items():
                         class_name, obj_id = key.split()
