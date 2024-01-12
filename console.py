@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+""" aihbnb cmd """
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -19,6 +19,7 @@ class HBNBCommand(cmd.Cmd):
                               3 : "** instance id missing **", 
                               4 : "** no instance found **" }
     def do_create(self, arg):
+        """ creates an instance """
         if arg in self.classes:
             arg = eval(arg)
             new_base_model = arg()
@@ -30,6 +31,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("class doesn't exist")
     def check(self, arg):
+        """ validates arg """
         if not arg:
             return 1
         else:
@@ -60,12 +62,14 @@ class HBNBCommand(cmd.Cmd):
             pass
         return arg
     def do_show(self, arg):
+        """ show the string representation of an instance """
         checked = self.check(arg)
         if type(checked) is int:
             print(self.dict_of_failure_output[checked])
         else:
             print (storage.all()[checked])
     def do_destroy(self, arg):
+        """ deletes an instance completely """
         checked = self.check(arg)
         if type(checked) is int:
             print(self.dict_of_failure_output[checked])
@@ -73,6 +77,7 @@ class HBNBCommand(cmd.Cmd):
             del storage.all()[checked]
             storage.save()
     def do_all(self, arg):
+        """ prints the string representation of all the instances of a class """
         if arg in self.classes:
             string_repr_of_a_class = []
             for key in storage.all().keys():
@@ -83,6 +88,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
     def do_update(self, arg):
+        """ updates an instance's attribute """
         checked = self.check(arg)
         if type(checked) is int:
             print(self.dict_of_failure_output[checked])
