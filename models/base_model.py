@@ -19,7 +19,7 @@ class BaseModel:
         else:
             models.storage.new(self)
     def __str__(self):
-        return ("[BaseModel] ({}) {}".format(self.id, self.__dict__))
+        return ("[__class__.__name__] ({}) {}".format(self.id, self.__dict__))
     def save(self):
         self.updated_at = datetime.datetime.today()
         models.storage.save()
