@@ -2,15 +2,18 @@
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 import re
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for HBNB project."""
     prompt = "(hbnb) "
+    classes = ["BaseModel", "User"]
     dict_of_failure_output = { 1 : "** class name missing **", 2 : "** class doesn't exist **", 3 : "** instance id missing **", 4 : "** no instance found **" }
     def do_create(self, arg):
-        if arg == "BaseModel":
-            new_base_model = BaseModel()
+        if arg in self.classes:
+            arg = eval(arg)
+            new_base_model = arg()
             new_base_model.save()
             print("{}".format(new_base_model.id))
         else:
@@ -24,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = arg.split()
             length = len(arg.split())
-            if length == 1 and args[0] != "BaseModel":
+            if length == 1 and args[0] not in self.classes:
                 return 2
             elif length == 1:
                 return 3
@@ -62,7 +65,7 @@ class HBNBCommand(cmd.Cmd):
             del storage.all()[checked]
             storage.save()
     def do_all(self, arg):
-        if arg == "BaseModel":
+        if arg in self.classes:
             string_repr_of_a_class = []
             for key in storage.all().keys():
                 k , v = key.split('.')
