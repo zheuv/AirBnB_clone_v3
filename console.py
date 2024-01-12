@@ -3,13 +3,21 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.amenity import Amenity
+from models.place import Place
+from models.city import City
+from models.state import State
+from models.review import Review
 from models import storage
 import re
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for HBNB project."""
     prompt = "(hbnb) "
     classes = ["BaseModel", "User", "Place", "Amenity", "City", "State", "Review"]
-    dict_of_failure_output = { 1 : "** class name missing **", 2 : "** class doesn't exist **", 3 : "** instance id missing **", 4 : "** no instance found **" }
+    dict_of_failure_output = { 1 : "** class name missing **",
+                              2 : "** class doesn't exist **", 
+                              3 : "** instance id missing **", 
+                              4 : "** no instance found **" }
     def do_create(self, arg):
         if arg in self.classes:
             arg = eval(arg)
