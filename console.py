@@ -8,7 +8,7 @@ import re
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for HBNB project."""
     prompt = "(hbnb) "
-    classes = ["BaseModel", "User"]
+    classes = ["BaseModel", "User", "Place", "Amenity", "City", "State", "Review"]
     dict_of_failure_output = { 1 : "** class name missing **", 2 : "** class doesn't exist **", 3 : "** instance id missing **", 4 : "** no instance found **" }
     def do_create(self, arg):
         if arg in self.classes:
