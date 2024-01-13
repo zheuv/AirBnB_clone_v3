@@ -135,8 +135,8 @@ class HBNBCommand(cmd.Cmd):
         for cmd, desc in commands.items():
             print(f"{cmd}: {desc}")
 
-        print("Use <command> -h or <command> --help for
-        specific command usage.")
+        print("Use <command> -h or <command> --help for "
+      "specific command usage.")
 
     def do_quit(self, arg):
         """Quit the command interpreter."""
