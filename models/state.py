@@ -2,6 +2,7 @@
 """ a class to sophisticate console """
 from models.base_model import BaseModel
 
+
 class State(BaseModel):
     """ State class which inherits from BaseModel """
     name = ""
