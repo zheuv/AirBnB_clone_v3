@@ -10,14 +10,18 @@ from models.state import State
 from models.review import Review
 from models import storage
 import re
+
+
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for HBNB project."""
     prompt = "(hbnb) "
-    classes = ["BaseModel", "User", "Place", "Amenity", "City", "State", "Review"]
-    dict_of_failure_output = { 1 : "** class name missing **",
-                              2 : "** class doesn't exist **", 
-                              3 : "** instance id missing **", 
-                              4 : "** no instance found **" }
+    classes = ["BaseModel", "User", "Place", "Amenity",
+               "City", "State", "Review"]
+    dict_of_failure_output = {1: "** class name missing **",
+                              2: "** class doesn't exist **", 
+                              3: "** instance id missing **", 
+                              4: "** no instance found **"}
+    
     def do_create(self, arg):
         """ creates an instance """
         if arg in self.classes:
@@ -30,6 +34,7 @@ class HBNBCommand(cmd.Cmd):
                 print("class name missing")
             else:
                 print("class doesn't exist")
+
     def check(self, arg):
         """ validates arg """
         if not arg:
@@ -51,6 +56,7 @@ class HBNBCommand(cmd.Cmd):
                     if key == arg:
                         return arg
                 return 4
+ 
     def cast(self, arg):
         """cast string to float or int if possible"""
         try:
@@ -61,6 +67,7 @@ class HBNBCommand(cmd.Cmd):
         except ValueError:
             pass
         return arg
+
     def do_show(self, arg):
         """ show the string representation of an instance """
         checked = self.check(arg)
@@ -68,6 +75,8 @@ class HBNBCommand(cmd.Cmd):
             print(self.dict_of_failure_output[checked])
         else:
             print (storage.all()[checked])
+
+
     def do_destroy(self, arg):
         """ deletes an instance completely """
         checked = self.check(arg)
@@ -76,6 +85,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             del storage.all()[checked]
             storage.save()
+
     def do_all(self, arg):
         """ prints the string representation of all the instances of a class """
         if arg in self.classes:
@@ -87,6 +97,7 @@ class HBNBCommand(cmd.Cmd):
             print(string_repr_of_a_class)
         else:
             print("** class doesn't exist **")
+
     def do_update(self, arg):
         """ updates an instance's attribute """
         checked = self.check(arg)
@@ -107,6 +118,7 @@ class HBNBCommand(cmd.Cmd):
                     value = arg[3]
                 setattr(storage.all()[checked], args[2], self.cast(value))
                 storage.save()
+
     def help(self):
         """Prints help messages for all available commands."""
         commands = {
