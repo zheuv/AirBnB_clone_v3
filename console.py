@@ -107,6 +107,23 @@ class HBNBCommand(cmd.Cmd):
                     value = arg[3]
                 setattr(storage.all()[checked], args[2], self.cast(value))
                 storage.save()
+    def help(self):
+        """Prints help messages for all available commands."""
+        commands = {
+            'create': 'Creates a new instance of a specified class.',
+            'show': 'Prints the string representation of an instance.',
+            'destroy': 'Deletes an instance completely.',
+            'all': 'Prints the string representation of all instances of a class.',
+            'update': 'Updates an instance\'s attribute.',
+            'quit': 'Quit the command interpreter.',
+            'EOF': 'Exit the program gracefully on EOF.'
+        }
+
+        for cmd, desc in commands.items():
+            print(f"{cmd}: {desc}")
+
+        print("Use <command> -h or <command> --help for specific command usage.")
+
     def do_quit(self, arg):
         """Quit the command interpreter."""
         return True
