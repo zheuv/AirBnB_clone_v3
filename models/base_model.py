@@ -4,6 +4,7 @@ import uuid
 import datetime
 import models
 
+
 class BaseModel:
     """ the BaseModel class """
     def __init__(self, **kwargs):
@@ -16,15 +17,19 @@ class BaseModel:
                 if key != '__class__':
                     if (key == "created_at" or key == "updated_at"):
                         format_string = "%Y-%m-%dT%H:%M:%S.%f"
-                        value = datetime.datetime.strptime(value, format_string)
+                        value = datetime.datetime.strptime
+                         (value, format_string)
                     setattr(self, key, value)
         else:
             models.storage.new(self)
+    
     def __str__(self):
         """ Returns the str repr of an instance """
-        return ("[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__))
+        return ("[{}] ({}) {}".format(self.__class__.__name__,
+                                      self.id, self.__dict__))
+
     def save(self):
-        """ updates updated_at and savesthe changes in the json file """ 
+        """ updates updated_at and savesthe changes in the json file """
         self.updated_at = datetime.datetime.today()
         models.storage.save()
 
@@ -38,4 +43,3 @@ class BaseModel:
                 value = value.isoformat()
             dicti[key] = value
         return dicti
-
