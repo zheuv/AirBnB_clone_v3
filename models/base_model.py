@@ -5,6 +5,7 @@ import datetime
 import models
 
 class BaseModel:
+    """ the BaseModel class """
     def __init__(self, **kwargs):
         """Initialization of BaseModel Class"""
         self.id = str(uuid.uuid4())
