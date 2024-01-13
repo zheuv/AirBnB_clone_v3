@@ -17,8 +17,7 @@ class BaseModel:
                 if key != '__class__':
                     if (key == "created_at" or key == "updated_at"):
                         format_string = "%Y-%m-%dT%H:%M:%S.%f"
-                        value = datetime.datetime.strptime
-                        (value, format_string)
+                        value = datetime.datetime.strptime(value, format_string)
                     setattr(self, key, value)
         else:
             models.storage.new(self)
@@ -36,7 +35,7 @@ class BaseModel:
     def to_dict(self):
         """ Returns the dict repr of an instance """
         dicti = dict()
-        dicti["__class__"] = "BaseModel"
+        dicti["__class__"] = self.__class__.__name__
         for key in self.__dict__.keys():
             value = getattr(self, key)
             if type(value) is datetime.datetime:
