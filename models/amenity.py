@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+""" a class to sophisticate console """
 from models.base_model import BaseModel
 
 
