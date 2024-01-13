@@ -86,7 +86,7 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_all(self, arg):
-        """ prints the string representation 
+        """ prints the string representation
         of all the instances of a class """
         if arg in self.classes:
             string_repr_of_a_class = []
@@ -136,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
             print(f"{cmd}: {desc}")
 
         print("Use <command> -h or <command> --help for "
-      "specific command usage.")
+        "specific command usage.")
 
     def do_quit(self, arg):
         """Quit the command interpreter."""
