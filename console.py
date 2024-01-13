@@ -18,10 +18,10 @@ class HBNBCommand(cmd.Cmd):
     classes = ["BaseModel", "User", "Place", "Amenity",
                "City", "State", "Review"]
     dict_of_failure_output = {1: "** class name missing **",
-                              2: "** class doesn't exist **", 
-                              3: "** instance id missing **", 
+                              2: "** class doesn't exist **",
+                              3: "** instance id missing **",
                               4: "** no instance found **"}
-    
+
     def do_create(self, arg):
         """ creates an instance """
         if arg in self.classes:
@@ -50,13 +50,13 @@ class HBNBCommand(cmd.Cmd):
                 arg = []
                 arg.append(args[0])
                 arg.append(args[1])
-                arg = '.'.join(arg) 
+                arg = '.'.join(arg)
                 data = storage.all()
                 for key in data.keys():
                     if key == arg:
                         return arg
                 return 4
- 
+
     def cast(self, arg):
         """cast string to float or int if possible"""
         try:
@@ -74,8 +74,7 @@ class HBNBCommand(cmd.Cmd):
         if type(checked) is int:
             print(self.dict_of_failure_output[checked])
         else:
-            print (storage.all()[checked])
-
+            print(storage.all()[checked])
 
     def do_destroy(self, arg):
         """ deletes an instance completely """
@@ -87,11 +86,12 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_all(self, arg):
-        """ prints the string representation of all the instances of a class """
+        """ prints the string representation 
+        of all the instances of a class """
         if arg in self.classes:
             string_repr_of_a_class = []
             for key in storage.all().keys():
-                k , v = key.split('.')
+                k, v = key.split('.')
                 if k == arg:
                     string_repr_of_a_class.append(str(storage.all()[key]))
             print(string_repr_of_a_class)
@@ -109,7 +109,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** attribute name missing **")
             elif len(args) == 3:
                 print("** value missing **")
-            else :
+            else:
                 if args[3].startswith('"'):
                     value = re.search(r'"([^"]+)"', arg).group(1)
                 elif args[3].startswith("'"):
@@ -125,7 +125,8 @@ class HBNBCommand(cmd.Cmd):
             'create': 'Creates a new instance of a specified class.',
             'show': 'Prints the string representation of an instance.',
             'destroy': 'Deletes an instance completely.',
-            'all': 'Prints the string representation of all instances of a class.',
+            'all': 'Prints the string representation of all
+            instances of a class.',
             'update': 'Updates an instance\'s attribute.',
             'quit': 'Quit the command interpreter.',
             'EOF': 'Exit the program gracefully on EOF.'
@@ -134,7 +135,8 @@ class HBNBCommand(cmd.Cmd):
         for cmd, desc in commands.items():
             print(f"{cmd}: {desc}")
 
-        print("Use <command> -h or <command> --help for specific command usage.")
+        print("Use <command> -h or <command> --help for
+        specific command usage.")
 
     def do_quit(self, arg):
         """Quit the command interpreter."""
@@ -147,6 +149,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Do nothing on an empty line."""
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
