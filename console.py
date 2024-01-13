@@ -125,15 +125,16 @@ class HBNBCommand(cmd.Cmd):
             'create': 'Creates a new instance of a specified class.',
             'show': 'Prints the string representation of an instance.',
             'destroy': 'Deletes an instance completely.',
-            'all': 'Prints the string representation of all
-            instances of a class.',
+            'all': 'Prints the string representation of all '
+            'instances of a class.',
             'update': 'Updates an instance attribute.',
             'quit': 'Quit the command interpreter.',
             'EOF': 'Exit the program gracefully on EOF.'}
 
         for cmd, desc in commands.items():
             print(f"{cmd}: {desc}")
-        print("Use <command> -h or <command> --help for "specific command usage.")
+        print("Use <command> -h or <command> --help for "specific"
+        "command usage.")
 
     def do_quit(self, arg):
         """Quit the command interpreter."""
