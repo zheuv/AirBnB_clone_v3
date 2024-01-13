@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" the BaseModel class implementation """
 import uuid
 import datetime
 import models
@@ -19,12 +20,15 @@ class BaseModel:
         else:
             models.storage.new(self)
     def __str__(self):
+        """ Returns the str repr of an instance """
         return ("[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__))
     def save(self):
+        """ updates updated_at and savesthe changes in the json file """ 
         self.updated_at = datetime.datetime.today()
         models.storage.save()
 
     def to_dict(self):
+        """ Returns the dict repr of an instance """
         dicti = dict()
         dicti["__class__"] = "BaseModel"
         for key in self.__dict__.keys():
