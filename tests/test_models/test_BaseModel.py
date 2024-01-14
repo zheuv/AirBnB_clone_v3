@@ -4,6 +4,7 @@
 from models.base_model import BaseModel
 import uuid
 import datetime
+from time import sleep
 
 
 
@@ -14,6 +15,12 @@ class TestBaseModel(unittest.TestCase):
         self.shared_model = BaseModel()
         self.shared_model.name = "My_First_Model"
         self.shared_model.my_number = 89
+
+    def test_type(self):
+        self.assertEqual(BaseModel, type(BaseModel))
+        self.assertEqual(BaseModel, type(self.shared_model))
+
+
     def test_NoneKwargs(self):
         expected_output = f"[BaseModel] ({self.shared_model.id}) {self.shared_model.__dict__}"
         actual_output = str(self.shared_model)
@@ -34,7 +41,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(self.shared_model.my_number, int)
         self.assertEqual(actual_output, expected_output)
         self.assertDictEqual(actual_output_dict, expected_output_dict)
-    
+
     def test_kwargs(self):
         mynew_model = BaseModel(**self.shared_model.to_dict())
         expected_output = f"[BaseModel] ({mynew_model.id}) {mynew_model.__dict__}"
@@ -56,6 +63,17 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(mynew_model.my_number, int)
         self.assertEqual(actual_output, expected_output)
         self.assertDictEqual(actual_output_dict, expected_output_dict)
+
+    def test_time(self):
+        sleep(0.05)
+        new = BaseModel()
+        self.assertNotEqual(new.created_at, self.shared_model.created_at)
+        self.assertLess(self.shared_model.created_at, new.created_at)
+        slepp(0.05)
+        new.save()
+        self.assertNotEqual(new.created_at, new.updated_at)
+        self.assertLess(new.created_at, new.updated_at)
+
 
 
 
