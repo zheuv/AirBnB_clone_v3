@@ -17,7 +17,7 @@ class TestBaseModel(unittest.TestCase):
         self.shared_model.my_number = 89
 
     def test_type(self):
-        self.assertEqual(BaseModel, type(BaseModel))
+        self.assertEqual(BaseModel, type(BaseModel()))
         self.assertEqual(BaseModel, type(self.shared_model))
 
 
@@ -69,7 +69,7 @@ class TestBaseModel(unittest.TestCase):
         new = BaseModel()
         self.assertNotEqual(new.created_at, self.shared_model.created_at)
         self.assertLess(self.shared_model.created_at, new.created_at)
-        slepp(0.05)
+        sleep(0.05)
         new.save()
         self.assertNotEqual(new.created_at, new.updated_at)
         self.assertLess(new.created_at, new.updated_at)
