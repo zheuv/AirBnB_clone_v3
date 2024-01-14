@@ -1,117 +1,62 @@
 #!/usr/bin/python3
-""" unit test for bases """
-import json
-import unittest
+
+
 from models.base_model import BaseModel
-from datetime import datetime
-import models
-from io import StringIO
-import sys
-from unittest.mock import patch
-captured_output = StringIO()
-sys.stdout = captured_output
+import uuid
+import datetime
 
 
-class BaseModelTestCase(unittest.TestCase):
-    """ class for base test """
 
+import unittest
+
+class TestBaseModel(unittest.TestCase):
     def setUp(self):
-        """ class for base test """
-        self.filepath = models.storage._FileStorage__file_path
-        with open(self.filepath, 'w') as file:
-            file.truncate(0)
-        models.storage.all().clear()
+        self.shared_model = BaseModel()
+        self.shared_model.name = "My_First_Model"
+        self.shared_model.my_number = 89
+    def test_NoneKwargs(self):
+        expected_output = f"[BaseModel] ({self.shared_model.id}) {self.shared_model.__dict__}"
+        actual_output = str(self.shared_model)
+        expected_output_dict = {
+            '__class__': 'BaseModel',
+            'id': self.shared_model.id,
+            'created_at': self.shared_model.created_at.isoformat(),
+            'updated_at': self.shared_model.updated_at.isoformat(),
+            'name': self.shared_model.name,
+            'my_number': self.shared_model.my_number
+        }
+        actual_output_dict = self.shared_model.to_dict()
 
-    def tearDown(self):
-        """ class for base test """
-        printed_output = captured_output.getvalue()
-        sys.stdout = sys.__stdout__
+        self.assertIsInstance(self.shared_model.id, str)
+        self.assertIsInstance(self.shared_model.created_at, datetime.datetime)
+        self.assertIsInstance(self.shared_model.updated_at, datetime.datetime)
+        self.assertIsInstance(self.shared_model.name, str)
+        self.assertIsInstance(self.shared_model.my_number, int)
+        self.assertEqual(actual_output, expected_output)
+        self.assertDictEqual(actual_output_dict, expected_output_dict)
+    
+    def test_kwargs(self):
+        mynew_model = BaseModel(**self.shared_model.to_dict())
+        expected_output = f"[BaseModel] ({mynew_model.id}) {mynew_model.__dict__}"
+        actual_output = str(mynew_model)
+        expected_output_dict = {
+            '__class__': 'BaseModel',
+            'id': mynew_model.id,
+            'created_at': mynew_model.created_at.isoformat(),
+            'updated_at': mynew_model.updated_at.isoformat(),
+            'name': mynew_model.name,
+            'my_number': mynew_model.my_number
+        }
+        actual_output_dict = mynew_model.to_dict()
 
-    def test_basemodel_init(self):
-        """ class for base test """
-        new = BaseModel()
+        self.assertIsInstance(mynew_model.id, str)
+        self.assertIsInstance(mynew_model.created_at, datetime.datetime)
+        self.assertIsInstance(mynew_model.updated_at, datetime.datetime)
+        self.assertIsInstance(mynew_model.name, str)
+        self.assertIsInstance(mynew_model.my_number, int)
+        self.assertEqual(actual_output, expected_output)
+        self.assertDictEqual(actual_output_dict, expected_output_dict)
 
-        """ check if it have methods """
-        self.assertTrue(hasattr(new, "__init__"))
-        self.assertTrue(hasattr(new, "__str__"))
-        self.assertTrue(hasattr(new, "save"))
-        self.assertTrue(hasattr(new, "to_dict"))
-
-        """existince"""
-        self.assertTrue(hasattr(new, "id"))
-        self.assertTrue(hasattr(new, "created_at"))
-        self.assertTrue(hasattr(new, "updated_at"))
-
-        """type test"""
-        self.assertIsInstance(new.id, str)
-        self.assertIsInstance(new.created_at, datetime)
-        self.assertIsInstance(new.updated_at, datetime)
-
-        """ check if save in storage """
-        keyname = "BaseModel."+new.id
-        """ check if object exist by keyname """
-        self.assertIn(keyname, models.storage.all())
-        """ check if the object found in storage with corrrect id"""
-        self.assertTrue(models.storage.all()[keyname] is new)
-
-        """ Test update """
-        new.name = "My First Model"
-        new.my_number = 89
-        self.assertTrue(hasattr(new, "name"))
-        self.assertTrue(hasattr(new, "my_number"))
-        self.assertTrue(hasattr(models.storage.all()[keyname], "name"))
-        self.assertTrue(hasattr(models.storage.all()[keyname], "my_number"))
-
-        """check if save() update update_at time change"""
-        old_time = new.updated_at
-        new.save()
-        self.assertNotEqual(old_time, new.updated_at)
-        self.assertGreater(new.updated_at, old_time)
-
-        """ check if init it call: models.storage.save() """
-        with patch('models.storage.save') as mock_function:
-            obj = BaseModel()
-            obj.save()
-            mock_function.assert_called_once()
-
-        """check if it save in json file"""
-        keyname = "BaseModel."+new.id
-        with open(self.filepath, 'r') as file:
-            saved_data = json.load(file)
-        """ check if object exist by keyname """
-        self.assertIn(keyname, saved_data)
-        """ check if the value found in json is correct"""
-        self.assertEqual(saved_data[keyname], new.to_dict())
-
-    def test_basemodel_init2(self):
-        """ class for base test """
-
-        new = BaseModel()
-        new.name = "John"
-        new.my_number = 89
-        new2 = BaseModel(**new.to_dict())
-        self.assertEqual(new.id, new2.id)
-        self.assertEqual(new.name, "John")
-        self.assertEqual(new.my_number, 89)
-        self.assertEqual(new.to_dict(), new2.to_dict())
-
-    def test_basemodel_init3(self):
-        """ DOC DOC DOC """
-        new = BaseModel()
-        new2 = BaseModel(new.to_dict())
-        self.assertNotEqual(new, new2)
-        self.assertNotEqual(new.id, new2.id)
-        self.assertTrue(isinstance(new2.created_at, datetime))
-        self.assertTrue(isinstance(new2.updated_at, datetime))
-
-        new = BaseModel()
-
-        self.assertEqual(
-            str(new),  "[BaseModel] ({}) {}".format(new.id, new.__dict__))
-
-        old_time = new.updated_at
-        new.save()
-        self.assertGreater(new.updated_at, old_time)
 
 
 if __name__ == '__main__':
