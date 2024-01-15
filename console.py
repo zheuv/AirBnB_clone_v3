@@ -88,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """ prints the string representation
         of all the instances of a class """
-        if arg == None:
+        if not arg:
             arg = "BaseModel"
         if arg in self.classes:
             string_repr_of_a_class = []
