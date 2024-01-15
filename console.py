@@ -42,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = arg.split()
             length = len(arg.split())
-            if length == 1 and args[0] not in self.classes:
+            if args[0] not in self.classes:
                 return 2
             elif length == 1:
                 return 3
