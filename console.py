@@ -31,9 +31,9 @@ class HBNBCommand(cmd.Cmd):
             print("{}".format(new_base_model.id))
         else:
             if not arg:
-                print("class name missing")
+                print("** class name missing **")
             else:
-                print("class doesn't exist")
+                print("** class doesn't exist **")
 
     def check(self, arg):
         """ validates arg """
