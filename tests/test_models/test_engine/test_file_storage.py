@@ -11,7 +11,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
-class test_FileStorage(unittest.Testcase):
+class test_FileStorage(unittest.TestCase):
   fs = FileStorage()
   model = BaseModel()
   def test_type_objects(self):
