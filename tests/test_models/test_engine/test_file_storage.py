@@ -2,6 +2,7 @@
 import unittest
 import json
 import os
+import models
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models.user import User
@@ -15,7 +16,7 @@ class test_FileStorage(unittest.TestCase):
   fs = FileStorage()
   model = BaseModel()
   def test_type_fs(self):
-    self.assertEqual(type(self.fs), Filestorage)
+    self.assertEqual(type(self.fs), FileStorage)
 
   def test_type_objects(self):
     self.assertEqual(type(self.fs._FileStorage__objects), dict)
