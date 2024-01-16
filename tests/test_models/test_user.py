@@ -15,7 +15,18 @@ class TestUser(unittest.TestCase):
     def test_type(self):
         self.assertEqual(User, type(User()))
         self.assertEqual(User, type(self.shared_user))
+    
+    def test_email_is_public_str(self):
+        self.assertEqual(str, type(User.email))
 
+    def test_password_is_public_str(self):
+        self.assertEqual(str, type(User.password))
+
+    def test_first_name_is_str(self):
+        self.assertEqual(str, type(User.first_name))
+
+    def test_last_name_is_public_str(self):
+        self.assertEqual(str, type(User.last_name))
     def test_NoneKwargs(self):
         expected_output = f"[User] ({self.shared_user.id}) {self.shared_user.__dict__}"
         actual_output = str(self.shared_user)
