@@ -15,9 +15,9 @@ class test_FileStorage(unittest.TestCase):
   fs = FileStorage()
   model = BaseModel()
   def test_type_objects(self):
-    assertEqual(type(fs._objects), dict)
+    self.assertEqual(type(fs._objects), dict)
   def test_type_file_path(self):
-    assertEqual(type(fs._file_path), str)
+    self.assertEqual(type(fs._file_path), str)
   
 if __name__ == "__main__":
     unittest.main()
