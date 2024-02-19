@@ -34,7 +34,7 @@ class BaseModel:
     def __str__(self):
         """ Returns the str repr of an instance """
         return ("[{}] ({}) {}".format(self.__class__.__name__,
-                                      self.id, self.__dict__))
+                                      self.id, self.to_dict()))
 
     def save(self):
         """ updates updated_at and savesthe changes in the json file """
