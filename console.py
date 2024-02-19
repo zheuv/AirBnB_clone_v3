@@ -130,11 +130,20 @@ class HBNBCommand(cmd.Cmd):
             arg = "BaseModel"
         if arg in self.classes:
             string_repr_of_a_class = []
-            for key in storage.all().keys():
-                k, v = key.split('.')
-                if k == arg:
-                    string_repr_of_a_class.append(str(storage.all()[key]))
-            print(string_repr_of_a_class)
+            from os import getenv
+            storage_type = getenv("HBNB_TYPE_STORAGE")
+            if storage_type == "db":
+                for key in storage.all(arg).keys():
+                    k, v = key.split('.')
+                    if k == arg:
+                        string_repr_of_a_class.append(str(storage.all()[key]))
+                print(string_repr_of_a_class)
+            else:
+                for key in storage.all().keys():
+                    k, v = key.split('.')
+                    if k == arg:
+                        string_repr_of_a_class.append(str(storage.all()[key]))
+                print(string_repr_of_a_class)
         else:
             print("** class doesn't exist **")
 
