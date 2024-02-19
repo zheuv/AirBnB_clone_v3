@@ -9,7 +9,7 @@ storage_type = getenv("HBNB_TYPE_STORAGE")
 
 
 class State(BaseModel, Base):
-    """ State class which inherits from BaseModel """from sqlalchemy.orm import relationship
+    """ State class which inherits from BaseModel """
     __tablename__ = "states"
     if storage_type == "db":
         name = Column(String(128), nullable=False)
