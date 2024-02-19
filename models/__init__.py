@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ the init file """
-import getenv
+from os import getenv
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
 if storage_type == "db":
