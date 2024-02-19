@@ -23,6 +23,7 @@ class HBNBCommand(cmd.Cmd):
                               4: "** no instance found **"}
     
     def do_create(self, arg):
+        """ an updated version of create that allows parameters """
         args = arg.split()
         if len(args) == 0:
             print(self.dict_of_failure_output[1])
@@ -42,7 +43,6 @@ class HBNBCommand(cmd.Cmd):
                     if index == (len_par - 1):
                         break
                     value = parameter[index + 1 : ]
-                    value = list(value)
                     if value[0] == "\"" and value[-1] == "\"" and value[-2] != "\\":
                         value = self.itis_a_string(value[1:-1])
                         if value:
@@ -55,6 +55,7 @@ class HBNBCommand(cmd.Cmd):
         print("{}".format(newmodel.id))
 
     def itis_a_string(self, value):
+        """ when the parameter is a string """
         value = ''.join(value)
         value = value.replace('\\"', '"')
         value = value.replace('_', ' ')
