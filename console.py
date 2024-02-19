@@ -21,19 +21,56 @@ class HBNBCommand(cmd.Cmd):
                               2: "** class doesn't exist **",
                               3: "** instance id missing **",
                               4: "** no instance found **"}
-
+    
     def do_create(self, arg):
-        """ creates an instance """
-        if arg in self.classes:
-            arg = eval(arg)
-            new_base_model = arg()
-            new_base_model.save()
-            print("{}".format(new_base_model.id))
-        else:
-            if not arg:
-                print("** class name missing **")
+        args = arg.split()
+        if len(args) == 0:
+            print(self.dict_of_failure_output[1])
+            return
+        classs = args.pop(0)
+        if classs not in self.classes:
+            print(f"{classs} {self.dict_of_failure_output[2]}")
+            return
+        classs = eval(classs)
+        newmodel = classs()
+        for parameter in args:
+            len_par = len(parameter)
+            for char in parameter:
+                if char == "=":
+                    index = parameter.index(char)
+                    key = parameter[0 : index]
+                    if index == (len_par - 1):
+                        break
+                    value = parameter[index + 1 : ]
+                    value = list(value)
+                    if value[0] == "\"" and value[-1] == "\"" and value[-2] != "\\":
+                        value = self.itis_a_string(value[1:-1])
+                        if value:
+                            setattr(newmodel, key, value)
+                    else:
+                        value = self.itis_anum(value)
+                        if value:
+                            setattr(newmodel, key, value)
+        newmodel.save()
+        print("{}".format(newmodel.id))
+
+    def itis_a_string(self, value):
+        value = ''.join(value)
+        value = value.replace('\\"', '"')
+        value = value.replace('_', ' ')
+        return value
+
+    def itis_anum(self, arg):
+        """cast string to float or int if possible"""
+        arg = ''.join(arg)
+        try:
+            if "." in arg:
+                arg = float(arg)
             else:
-                print("** class doesn't exist **")
+                arg = int(arg)
+        except ValueError or TypeError:
+            return False
+        return arg
 
     def check(self, arg):
         """ validates arg """
