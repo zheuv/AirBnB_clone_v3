@@ -22,7 +22,8 @@ class FileStorage:
         if cls:
             dicti = dict()
             for key in FileStorage.__objects.keys():
-                if key.split('.')[0] == cls:
+                k = key.split('.')
+                if k[0] == cls:
                     dicti[key] = FileStorage.__objects[key]
             return dicti       
         return FileStorage.__objects
