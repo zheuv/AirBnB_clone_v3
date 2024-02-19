@@ -39,6 +39,7 @@ class DBStorage:
         clss = eval(cls)
         rows = self.__session.query(clss).all()
         for row in rows:
+          print(row)
           instance = "{}.{}".format(cls, row.id)
           dicti [instance] = row
       return dicti
