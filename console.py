@@ -136,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
                 for key in storage.all(arg).keys():
                     k, v = key.split('.')
                     if k == arg:
-                        string_repr_of_a_class.append(str(storage.all()[key]))
+                        string_repr_of_a_class.append(str(storage.all(arg)[key]))
                 print(string_repr_of_a_class)
             else:
                 for key in storage.all().keys():
