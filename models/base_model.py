@@ -7,6 +7,13 @@ import models
 
 class BaseModel:
     """ the BaseModel class """
+    id = Column(String(60), primary_key=True,
+                nullable=False, unique=True)
+    created_at = Column(DateTime, nullable=False,
+                        default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, nullable=False,
+                        default=datetime.datetime.utcnow,
+                        onupdate=datetime.datetime.utcnow)
     def __init__(self, **kwargs):
         """Initialization of BaseModel Class"""
         self.id = str(uuid.uuid4())
@@ -19,8 +26,6 @@ class BaseModel:
                         format_string = "%Y-%m-%dT%H:%M:%S.%f"
                         value = datetime.datetime.strptime(value, format_string)
                     setattr(self, key, value)
-        else:
-            models.storage.new(self)
 
     def __str__(self):
         """ Returns the str repr of an instance """
@@ -30,6 +35,7 @@ class BaseModel:
     def save(self):
         """ updates updated_at and savesthe changes in the json file """
         self.updated_at = datetime.datetime.today()
+        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
@@ -37,8 +43,13 @@ class BaseModel:
         dicti = dict()
         dicti["__class__"] = self.__class__.__name__
         for key in self.__dict__.keys():
-            value = getattr(self, key)
-            if type(value) is datetime.datetime:
-                value = value.isoformat()
-            dicti[key] = value
+            if key != "_sa_instance_state":
+                value = getattr(self, key)
+                if type(value) is datetime.datetime:
+                    value = value.isoformat()
+                dicti[key] = value
         return dicti
+
+    def delete(self):
+        """deletes an instance """
+        models.storage.delete(self)
