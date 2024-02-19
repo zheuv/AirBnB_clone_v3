@@ -6,6 +6,9 @@ import models
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
 
+Base = declarative_base()
+
+
 class BaseModel:
     """ the BaseModel class """
     id = Column(String(60), primary_key=True,
