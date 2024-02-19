@@ -17,14 +17,26 @@ class FileStorage:
     __file_path = "file.json"
     __objects = dict()
 
-    def all(self):
+    def all(self, cls=None):
         """ returns the dictionary __objects """
+        if cls:
+            dicti = dict()
+            for key in FileStorage.__objects.keys():
+                if key.split('.')[0] == cls:
+                    dicti[key] = FileStorage.__objects[key]
+            return dicti       
         return FileStorage.__objects
 
     def new(self, obj):
         """ sets in __objects the obj with key <obj class name>.id """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
+
+    def delete(self, obj=None):
+        """ deletes an object from objects """
+        if obj != None:
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+            del FileStorage.__objects[key]
 
     def save(self):
         """ serializes __objects to the JSON file (path: __file_path) """
