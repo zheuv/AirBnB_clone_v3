@@ -36,8 +36,8 @@ class DBStorage:
     dicti = dict()
     if cls is not None:
       if cls in list:
-        cls = eval(cls)
-        rows = self.__session.query(cls).all()
+        clss = eval(cls)
+        rows = self.__session.query(clss).all()
         for row in rows:
           instance = "{}.{}".format(cls, row.id)
           dicti [instance] = row
