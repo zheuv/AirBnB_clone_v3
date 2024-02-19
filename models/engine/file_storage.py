@@ -19,12 +19,12 @@ class FileStorage:
 
     def all(self, cls=None):
         """ returns the dictionary __objects """
-        if cls:
+        if cls is not None:
             dicti = dict()
-            for key in FileStorage.__objects.keys():
+            for key, value in FileStorage.__objects.items():
                 k = key.split('.')
-                if k[0] == cls:
-                    dicti[key] = FileStorage.__objects[key]
+                if k[0] == cls.__name__:
+                    dicti[key] = value
             return dicti       
         return FileStorage.__objects
 
