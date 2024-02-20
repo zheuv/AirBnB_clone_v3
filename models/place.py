@@ -43,7 +43,7 @@ class Place(BaseModel, Base):
         reviews = storage.all(Review)
         list = []
         for value in reviews.values():
-            if value["place_id"] == self.id:
+            if value.place_id == self.id:
                 list.append(value)
         return list
                 
