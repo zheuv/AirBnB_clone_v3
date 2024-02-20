@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
+from models.review import Review
 from os import getenv
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
@@ -39,7 +40,6 @@ class Place(BaseModel, Base):
     def reviews(self):
         """ filestorage relationship """
         from models import storage
-        from models.review import Review
         reviews = storage.all(Review)
         list = []
         for value in reviews.values():
