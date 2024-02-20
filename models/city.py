@@ -14,7 +14,7 @@ class City(BaseModel, Base):
     if storage_type == "db":
         state_id = Column(String(60), ForeignKey('states.id'))
         name = Column(String(128), nullable=False)
-        places = relationship(Place, cascade="al,delete", backref="cities")
+        places = relationship(Place, cascade="all,delete", backref="cities")
     else:
         state_id = ""
         name = ""
