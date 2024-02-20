@@ -2,6 +2,7 @@
 """ a class to sophisticate console """
 from models.base_model import BaseModel, Base
 from sqlalchemy import String, Column, ForeignKey
+from sqlalchemy.orm import relationship
 from os import getenv
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
@@ -13,6 +14,7 @@ class City(BaseModel, Base):
     if storage_type == "db":
         state_id = Column(String(60), ForeignKey('states.id'))
         name = Column(String(128), nullable=False)
+        places = relationship(Place, cascade="al,delete", backref="cities")
     else:
         state_id = ""
         name = ""
