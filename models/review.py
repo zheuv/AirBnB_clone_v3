@@ -6,7 +6,7 @@ from os import getenv
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
 
-class Review(BaseModel):
+class Review(BaseModel, Base):
     """User class that inherits from BaseModel."""
     __tablename__ = "reviews"
     if storage_type == "db":
