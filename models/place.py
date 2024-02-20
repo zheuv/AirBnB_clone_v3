@@ -11,7 +11,7 @@ storage_type = getenv("HBNB_TYPE_STORAGE")
 class Place(BaseModel, Base):
     """Place class that inherits from BaseModel."""
     __Tablename__ = "places"
-    if storage_type = "db":
+    if storage_type == "db":
         city_id = Column(String(60), nullable=False, ForeignKey("cities.id"))
         user_id = Column(String(60), nullable=False, ForeignKey("users.id"))
         name = Column(String(128), nullable=False)
