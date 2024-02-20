@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ a class to sophisticate console """
 from models.base_model import BaseModel, Base
-from sqlalchemyorm import Column, String
+from sqlalchemy import Column, String
 from os import getenv
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
