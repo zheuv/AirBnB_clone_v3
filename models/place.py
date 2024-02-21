@@ -36,14 +36,14 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
-    @getter
-    def reviews(self):
-        """ filestorage relationship """
-        from models import storage
-        reviews = storage.all(Review)
-        list = []
-        for value in reviews.values():
-            if value.place_id == self.id:
-                list.append(value)
-        return list
+        @getter
+        def reviews(self):
+            """ filestorage relationship """
+            from models import storage
+            reviews = storage.all(Review)
+            list = []
+            for value in reviews.values():
+                if value.place_id == self.id:
+                    list.append(value)
+            return list
                 
