@@ -5,7 +5,7 @@ from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from models.review import Review
 from os import getenv
-from functools import getter
+
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
 
@@ -38,7 +38,7 @@ class Place(BaseModel, Base):
         longitude = 0.0
         amenity_ids = []
         
-        @getter
+        @property
         def reviews(self):
             """ filestorage relationship """
             from models import storage
