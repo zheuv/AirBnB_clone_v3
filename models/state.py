@@ -16,7 +16,7 @@ class State(BaseModel, Base):
         cities = relationship('City', cascade="all,delete", backref="state")
     else:
         name = ""
-        @getter
+        @property
         def cities(self):
             from models import storage
             list = []
