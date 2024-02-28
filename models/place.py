@@ -5,6 +5,7 @@ from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from models.review import Review
 from os import getenv
+from functools import getter
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
 
