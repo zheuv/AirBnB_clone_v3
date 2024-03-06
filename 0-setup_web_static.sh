@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# acomplex script that does and does and does
 if ! dpkg -s nginx &> /dev/null; then
         sudo apt-get update
         sudo apt-get install nginx -y
