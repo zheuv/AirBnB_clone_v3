@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # acomplex script that does and does and does
+trap 'exit 0' ERR
+
 if ! dpkg -s nginx &> /dev/null; then
         sudo apt-get update
         sudo apt-get install nginx -y
@@ -16,10 +18,7 @@ echo "<html>
   </body>
 </html>" | sudo tee /data/web_static/releases/test/index.html &> /dev/null
 
-if [ -L /data/web_static/current ]; then
-    sudo rm /data/web_static/current
-fi
-
+rm -rf /data/web_static/current
 # Create a new symbolic link
 sudo ln -s /data/web_static/releases/test/ /data/web_static/current
 
