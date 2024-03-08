@@ -7,23 +7,18 @@ from fabric.api import local
 from datetime import datetime
 
 
+@runs_once
 def do_pack():
+    """ method doc
+        sudo fab -f 1-pack_web_static.py do_pack
     """
-    Generates a .tgz archive from the contents of the web_static folder.
-    All files in the folder web_static are added to the final archive.
-    All archives are stored in the folder versions.
-    The name of the ar><month><day><hour><minute><second>.tgz
-    Returns:
-        Archives been correctly generated, otherwise None.
-    """
-    try:
-        current_time = datetime.now().strftime("%Y%m%d%H%M%S")
-        file_name = "versions/web_static_{}.tgz".format(current_time)
-        local("mkdir -p versions")
-        local("tar -czvf {} web_static".format(file_name))
-        return file_name
-    except Exception as e:
-        return None
+    formatted_dt = datetime.now().strftime('%Y%m%d%H%M%S')
+    mkdir = "mkdir -p versions"
+    path = "versions/web_static_{}.tgz".format(formatted_dt)
+    print("Packing web_static to {}".format(path))
+    if local("{} && tar -cvzf {} web_static".format(mkdir, path)).succeeded:
+        return path
+    return None
 
 """
 Fabric script that distributes an archive to your web servers,
