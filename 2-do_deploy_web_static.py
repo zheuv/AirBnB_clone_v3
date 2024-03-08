@@ -30,7 +30,7 @@ def do_deploy(archive_path):
         filename_no_ext = filename.split('.')[0]
 
         # Upload the archive to /tmp directory of the web server
-        run("scp {} {}@{}:/tmp/".format(archive_path, env.user, env.host))
+        put(archive_path, "/tmp/")
 
         # Create directory for the new version
         run("mkdir -p /data/web_static/releases/{}/".format(filename_no_ext))
