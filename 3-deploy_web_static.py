@@ -96,3 +96,13 @@ def do_deploy(archive_path):
     except Exception as e:
         print("Error:", e)
         return False
+
+@task
+def deploy():
+    """ method doc
+        sudo fab -f 1-pack_web_static.py do_pack
+    """
+    path = do_pack()
+    if path is None:
+        return False
+    return do_deploy(path)
