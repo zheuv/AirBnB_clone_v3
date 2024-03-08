@@ -3,7 +3,7 @@
 Fabric script that generates a .tgz archive from the c
 folder of your AirBnB Clone repo, using the function do_pack.
 """
-from fabric.api import local
+from fabric.api import task, local, env, put, run, runs_once
 from datetime import datetime
 
 
