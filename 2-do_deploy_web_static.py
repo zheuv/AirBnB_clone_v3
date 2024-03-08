@@ -3,13 +3,13 @@
 Fabric script that distributes an archive to your web servers,
 using the function do_deploy
 """
-from fabric import task
+from fabric.api import task, local, env, put, run
 from datetime import datetime
 import os
 
 # Define the user and host addresses for your web servers
 env.user = 'ubuntu'
-env.hosts = ['3.235.24.147', '34.203.38.9']
+env.hosts = ['34.203.38.9', '3.86.13.195']
 
 
 @task
