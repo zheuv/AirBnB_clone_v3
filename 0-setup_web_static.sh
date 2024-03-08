@@ -24,11 +24,6 @@ sudo ln -s /data/web_static/releases/test/ /data/web_static/current
 
 sudo chown -R ubuntu:ubuntu /data/
 
-# Define the Nginx configuration to be inserted
-hbnb_static="    location /hbnb_static {
-        alias /data/web_static/current/;
-    }"
-
 # Find the line number of the closing curly brace of the server block
 config="/etc/nginx/sites-available/default"
 # Use sed to insert the content of $hbnb_static before the closing curly brace
