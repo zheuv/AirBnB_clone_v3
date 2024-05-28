@@ -68,8 +68,8 @@ class DBStorage:
             if cls in self.list:
                 clss = eval(cls)
                 rows = self.__session.query(clss).all()  # 'rows' is assigned here
-            for row in rows:  # Reference to 'rows' without guaranteed assignment
-                n = n + 1
+                for row in rows:  # Reference to 'rows' without guaranteed assignment
+                    n = n + 1
             return n
         else:
             for cls in self.list:
