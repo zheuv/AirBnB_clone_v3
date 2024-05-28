@@ -55,7 +55,8 @@ class DBStorage:
     def get(self, cls, id):
         if cls is not None:
             if cls in self.list:
-                rows = self.__session.query(cls).all()
+                clss = eval(cls)
+                rows = self.__session.query(clss).all()
                 for row in rows:
                     if row.id == id:
                         return row
@@ -64,13 +65,15 @@ class DBStorage:
         n = 0
         if cls is not None:
             if cls in self.list:
-                rows = self.__session.query(cls).all()
+                clss = eval(cls)
+                rows = self.__session.query(clss).all()
             for row in rows:
                 n = n + 1
             return n
         else:
             for cls in self.list:
-                rows = self.__session.query(cls).all()
+                clss = eval(cls)
+                rows = self.__session.query(clss).all()
                 for row in rows:
                     n = n + 1
             return n
