@@ -61,22 +61,23 @@ class DBStorage:
                     if row.id == id:
                         return row
         return None
-    def count(self, cls=None):
-        n = 0
-        if cls is not None:
-            if cls in self.list:
-                clss = eval(cls)
-                rows = self.__session.query(clss).all()
-            for row in rows:
+def count(self, cls=None):
+    n = 0
+    if cls is not None:
+        if cls in self.list:
+            clss = eval(cls)
+            rows = self.__session.query(clss).all()  # 'rows' is assigned here
+        for row in rows:  # Reference to 'rows' without guaranteed assignment
+            n = n + 1
+        return n
+    else:
+        for cls in self.list:
+            clss = eval(cls)
+            rows = self.__session.query(clss).all()  # 'rows' is assigned here
+            for row in rows:  # Reference to 'rows' without guaranteed assignment
                 n = n + 1
-            return n
-        else:
-            for cls in self.list:
-                clss = eval(cls)
-                rows = self.__session.query(clss).all()
-                for row in rows:
-                    n = n + 1
-            return n
+        return n
+
 
 
     def new(self, obj):
