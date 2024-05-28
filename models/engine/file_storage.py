@@ -16,7 +16,7 @@ class FileStorage:
     """ FileStorage class """
     __file_path = "file.json"
     __objects = dict()
-
+    list = ["User", "Amenity", "Place", "City", "State", "Review"]
     def all(self, cls=None):
         """ returns the dictionary __objects """
         if cls is not None:
@@ -27,6 +27,27 @@ class FileStorage:
                     dicti[key] = value
             return dicti       
         return FileStorage.__objects
+
+    def get(self, cls, id):
+        """ Returns an instance """
+        if (cls is not None) and (id is not None):
+            dicti = dict()
+            cls.id = cls.__name__  + '.' + id
+            for key, value in FileStorage.__objects.items():
+                if key == cls.id:
+                    return str(value)
+        return None
+    def count(self, cls=None):
+        """ Retruns the number of instances """
+        n = 0
+        if cls is not None:
+            if cls in self.list:
+                for key in FileStorage.__objects.keys():
+                    k = key.split('.')
+                    if k[0] == cls.__name__:
+                        n = n + 1
+            return n
+        return len(FileStorage.__objects)
 
     def new(self, obj):
         """ sets in __objects the obj with key <obj class name>.id """
