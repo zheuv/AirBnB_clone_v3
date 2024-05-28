@@ -53,6 +53,7 @@ class DBStorage:
             return dicti
 
     def get(self, cls, id):
+        """ doc """
         if cls is not None:
             if cls in self.list:
                 clss = eval(cls)
@@ -63,6 +64,7 @@ class DBStorage:
         return None
     
     def count(self, cls=None):
+        """ doc """
         n = 0
         if cls is not None:
             if cls in self.list:
